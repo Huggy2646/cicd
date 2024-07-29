@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     // Gradle Wrapper의 실행 권한을 다시 설정 (옵션)
-                    sh 'chmod +x gradlew'
+                    sh 'chmod 755 gradlew'
                     // Gradle Wrapper를 사용하여 빌드
                     sh './gradlew bootJar'
                 }
