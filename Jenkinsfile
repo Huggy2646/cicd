@@ -4,7 +4,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // 소스 코드 체크아웃
-                git 'https://github.com/your-repo/your-project.git'
+                git branch: 'main', url: 'https://github.com/Huggy2646/cicd.git'
             }
         }
         stage('Build') {
