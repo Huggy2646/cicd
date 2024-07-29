@@ -7,14 +7,13 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Huggy2646/cicd.git'
             }
         }
-        stage('Build') {
+ stage('Build') {
             steps {
-                // Gradle 빌드 수행
                 script {
-                    def gradleHome = tool name: 'Gradle', type: 'gradle'
-                    withEnv(["PATH+GRADLE=${gradleHome}/bin"]) {
-                        sh './gradlew bootJar'
-                    }
+                    // Gradle Wrapper의 실행 권한을 다시 설정 (옵션)
+                    sh 'chmod +x gradlew'
+                    // Gradle Wrapper를 사용하여 빌드
+                    sh './gradlew bootJar'
                 }
             }
         }
