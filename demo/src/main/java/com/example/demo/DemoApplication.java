@@ -4,19 +4,23 @@ import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import org.springframework.boot.SpringApplication;
+import com.jcraft.jsch.JSchException;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 @SpringBootApplication
 public class DemoApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws JSchException, IOException {
 		SpringApplication.run(DemoApplication.class, args);
 		String jumpServerHost = "i11e108.p.ssafy.io";
 		String jumpServerUser = "ubuntu";
-		String jumpServerIdentityPath = "/mnt/c/Users/SSAFY/Desktop";
+		String jumpServerIdentityPath = "C:\\Users\\SSAFY\\Desktop\\I11E108T.pem";
 
-		String remoteServerHost = "192.168.30.188";
-		String remoteServerUser = "DESKTOP-MMCQPV1";
+		String remoteServerHost = "localhost";
+		String remoteServerUser = "SSAFY";
 		String remoteServerPassword = "";
 
 		StringBuilder requestBuilder = new StringBuilder();
@@ -50,7 +54,21 @@ public class DemoApplication {
 		jumpSession.connect();
 
 
-		log.info("SSH session1 connected");
-		출처: https://annajin.tistory.com/227 [내일 한걸음 더:티스토리]
+		//채널 하나 만듦
+		channel = (ChannelExec) jumpSession.openChannel("exec");
+
+		// 실행할 명령어 설정
+		String command = "echo \"hi\" > test.txt";
+		channel.setCommand(command);
+
+		// 명령어 실행 시 사용할 스트림 설정
+		channel.setInputStream(null);
+		channel.setErrStream(System.err);
+
+		// 명령어 실행
+		channel.connect();
+
+
+
 	}
 }
